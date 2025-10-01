@@ -48,7 +48,7 @@ if st.button("Exportovat do PDF"):
     pdf.cell(200, 10, txt="Body na kruznici – Vystup", ln=True, align='C')
     pdf.cell(200, 10, txt=f"Stred: ({x_center}, {y_center})", ln=True)
     pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
-    pdf.cell(200, 10, txt=f"Pocet bodů: {num_points}", ln=True)
+    pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
     pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
     pdf.output("vystup_kruznice.pdf")
     st.success("PDF bylo vytvořeno jako 'vystup_kruznice.pdf'.")
