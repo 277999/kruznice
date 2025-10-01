@@ -2,7 +2,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 from fpdf import FPDF
-import io
+import os
 
 # Základní nastavení
 st.title("Body na kružnici")
@@ -31,19 +31,10 @@ ax.set_ylabel("Y (m)")
 ax.grid(True)
 st.pyplot(fig)
 
-# Informace o aplikaci
-if st.checkbox("Zobrazit informace o aplikaci"):
-    st.markdown("""
-    ### O aplikaci
-    - Autor: Aneta Kolářová
-    - Kontakt: 277999@vutbr.cz
-    - Technologie: Python, Streamlit, Matplotlib, FPDF
-    - Tato aplikace byla vytvořena pomocí umělé inteligence Microsoft Copilot          
-    """)
-
-
-import streamlit as st
-from fpdf import FPDF
+# Uložení obrázku jako soubor
+image_path = "kruznice.png"
+fig.savefig(image_path)
+plt.close(fig)
 
 # Vytvoření PDF
 pdf = FPDF()
@@ -55,6 +46,9 @@ pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
 pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
 pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
 
+# Přidání obrázku do PDF
+pdf.image(image_path, x=10, y=80, w=180)
+
 # Získání obsahu PDF jako bajtů
 pdf_bytes = pdf.output(dest='S').encode('latin1')
 
@@ -65,3 +59,17 @@ st.download_button(
     file_name="vystup_kruznice.pdf",
     mime="application/pdf"
 )
+
+# Odstranění obrázku po použití
+if os.path.exists(image_path):
+    os.remove(image_path)
+
+# Informace o aplikaci
+if st.checkbox("Zobrazit informace o aplikaci"):
+    st.markdown("""
+    ### O aplikaci
+    - Autor: Aneta Kolářová
+    - Kontakt: 277999@vutbr.cz
+    - Technologie: Python, Streamlit, Matplotlib, FPDF
+    - Tato aplikace byla vytvořena pomocí umělé inteligence Microsoft Copilot          
+    """)
