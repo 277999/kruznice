@@ -60,7 +60,7 @@ if st.button("Exportovat do PDF"):
     pdf_bytes = pdf_buffer.getvalue()
 
 st.download_button(
-label="📥 Stáhnout PDF",
+label="Stáhnout PDF",
 data=pdf_bytes,
 file_name="vystup_kruznice.pdf",
 mime="application/pdf"
