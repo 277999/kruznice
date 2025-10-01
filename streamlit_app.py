@@ -41,28 +41,26 @@ if st.checkbox("Zobrazit informace o aplikaci"):
     - Tato aplikace byla vytvořena pomocí umělé inteligence Microsoft Copilot          
     """)
 
-# Export do PDF
-if st.button("Exportovat do PDF"):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Body na kruznici - Vystup", ln=True, align='C')
-    pdf.cell(200, 10, txt=f"Stred: ({x_center}, {y_center})", ln=True)
-    pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
-    pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
-    pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
-    pdf.output("vystup_kruznice.pdf")
-    st.success("PDF bylo vytvoreno jako 'vystup_kruznice.pdf'.")
 
-    # Uložení do paměti jako bytes
-    pdf_buffer = io.BytesIO()
-    pdf.output(pdf_buffer)
-    pdf_bytes = pdf_buffer.getvalue()
+# Vytvoření PDF do paměti
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Body na kruznici - Vystup", ln=True, align='C')
+pdf.cell(200, 10, txt=f"Stred: ({x_center}, {y_center})", ln=True)
+pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
+pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
+pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
 
+# Uložení PDF do paměti
+pdf_buffer = io.BytesIO()
+pdf.output(pdf_buffer)
+pdf_buffer.seek(0)  # důležité: nastaví pozici na začátek
+
+# Nabídka ke stažení
 st.download_button(
-label="Stáhnout PDF",
-data=pdf_bytes,
-file_name="vystup_kruznice.pdf",
-mime="application/pdf"
+    label="Stáhnout PDF",
+    data=pdf_buffer,
+    file_name="vystup_kruznice.pdf",
+    mime="application/pdf"
 )
-
