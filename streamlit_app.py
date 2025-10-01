@@ -45,6 +45,7 @@ pdf.cell(200, 10, txt=f"Stred: ({x_center}, {y_center})", ln=True)
 pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
 pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
 pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
+pdf.cell(200, 10, txt=f"email: 277999@vutbr.cz", ln=True)
 
 # Přidání obrázku do PDF
 pdf.image(image_path, x=10, y=80, w=180)
