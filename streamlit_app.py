@@ -2,6 +2,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 from fpdf import FPDF
+import io
 
 # Základní nastavení
 st.title("Body na kružnici")
@@ -52,4 +53,16 @@ if st.button("Exportovat do PDF"):
     pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
     pdf.output("vystup_kruznice.pdf")
     st.success("PDF bylo vytvoreno jako 'vystup_kruznice.pdf'.")
+
+    # Uložení do paměti jako bytes
+    pdf_buffer = io.BytesIO()
+    pdf.output(pdf_buffer)
+    pdf_bytes = pdf_buffer.getvalue()
+
+    st.download_button(
+    label="📥 Stáhnout PDF",
+    data=pdf_bytes,
+    file_name="vystup_kruznice.pdf",
+    mime="application/pdf"
+    )
 
