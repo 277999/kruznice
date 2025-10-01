@@ -42,7 +42,10 @@ if st.checkbox("Zobrazit informace o aplikaci"):
     """)
 
 
-# Vytvoření PDF do paměti
+import streamlit as st
+from fpdf import FPDF
+
+# Vytvoření PDF
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", size=12)
@@ -52,15 +55,13 @@ pdf.cell(200, 10, txt=f"Polomer: {radius} m", ln=True)
 pdf.cell(200, 10, txt=f"Pocet bodu: {num_points}", ln=True)
 pdf.cell(200, 10, txt=f"Barva bodu: {color}", ln=True)
 
-# Uložení PDF do paměti
-pdf_buffer = io.BytesIO()
-pdf.output(pdf_buffer)
-pdf_buffer.seek(0)  # důležité: nastaví pozici na začátek
+# Získání obsahu PDF jako bajtů
+pdf_bytes = pdf.output(dest='S').encode('latin1')
 
 # Nabídka ke stažení
 st.download_button(
     label="Stáhnout PDF",
-    data=pdf_buffer,
+    data=pdf_bytes,
     file_name="vystup_kruznice.pdf",
     mime="application/pdf"
 )
